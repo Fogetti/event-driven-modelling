@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>Event driven simulation demo</title>
+        <meta name="description" content="">
+        <meta name="author" content="Gergely">
+    </head>
+
+    <body style="background: black">
+        <div>
+            <header>
+                <div>
+                <h1 style="color: gray">Event driven simulation demo:</h1> <canvas id="simulation" style="background: black"></canvas>
+                </div>
+            </header>
+
+            <footer>
+                <p style="color: gray">
+                    &copy; Copyright  by Gergely
+                </p>
+            </footer>
+        </div>
+        <script src="js/type.js"></script>
+        <script src="js/minpq.js"></script>
+        <script src="js/particle.js"></script>
+        <script src="js/collision-system.js"></script>
+        <script>
+            var width = 400;
+            var height = 400;
+            var canvas = document.getElementById("simulation");
+            windowResizeHandler();
+            window.addEventListener('resize', windowResizeHandler, false);
+            var c = canvas.getContext("2d");
+            
+            var particles = Particle.generate(c,100,width,height);
+            var system = new CollisionSystem(particles,canvas);
+            system.simulate();
+
+            function windowResizeHandler() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }        
+        </script>
+    </body>
+</html>
