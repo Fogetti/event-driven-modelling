@@ -1,19 +1,15 @@
 var CollisionSystem = (function invocation() {
     
-    function CollisionSystem(particles,canvas) {
-        this.limit               = 1000000;
-        this.pq              = new MinPQ();
-        this.t                       = 0.0;
-        this.hz                   = 1000.0;
-        this.particles         = particles;
-        this.c   = canvas.getContext("2d");
-        this.canvas               = canvas;
+    function CollisionSystem(particles) {
+        this.limit                                = 10000000;
+        this.pq                                = new MinPQ();
+        this.t                                         = 0.0;
+        this.hz                                      = 0.001;
+        this.particles                           = particles;
     }
-
+    
     CollisionSystem.prototype.simulate = function() {
         var self = this;
-        
-        this.c.globalCompositeOperation = "destination-over";
         
         // initialize PQ with collision events and redraw event
         for (var i = 0; i < this.particles.length; i++) {
@@ -21,16 +17,14 @@ var CollisionSystem = (function invocation() {
         }
         this.pq.insert(new Event(0, null, null));        // redraw event
         
-        setTimeout(function() {
-            self.move();
-        }, 0);
+        self.move();
     };
     
     CollisionSystem.prototype.move = function() {
         var self = this;
         
         // the main event-driven simulation loop
-        if (!self.pq.isEmpty()) {
+        while (!self.pq.isEmpty()) {
             // get impending event, discard if invalidated
             var e = self.pq.delMin();
             if (e.isValid()) {
@@ -47,7 +41,7 @@ var CollisionSystem = (function invocation() {
                 if      (a != null && b != null) a.bounceOff(b);              // particle-particle collision
                 else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
                 else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
-                else if (a == null && b == null) self.redraw();               // redraw event
+                else if (a == null && b == null) self.postResult();           // postResult event
     
                 // update the priority queue with new collisions involving a or b
                 self.predict(a);
@@ -55,31 +49,10 @@ var CollisionSystem = (function invocation() {
             }
         }
 
-        setTimeout(function() {
-            self.move();
-        }, 0);
     };
     
-    CollisionSystem.prototype.redraw = function() {
-        // buffer canvas
-        var canvas2 = document.createElement("canvas");
-        canvas2.width = this.canvas.width;
-        canvas2.height = this.canvas.height;
-        var cx2 = canvas2.getContext("2d");
-        cx2.fillStyle = "rgba(0,0,0,0.01)";
-        cx2.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
-        cx2.drawImage(this.c.canvas, 0, 0);
-        
-        this.c.clearRect(0, 0, this.c.canvas.width, this.c.canvas.height);
-
-        for (var i = 0; i < this.particles.length; i++) {
-            this.particles[i].draw(cx2);
-        }
-        
-        this.c.fillStyle = "rgba(0,0,0,0.08)";
-        this.c.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
-        this.c.drawImage(canvas2, 0, 0);
-
+    CollisionSystem.prototype.postResult = function() {
+    	postMessage(this.particles);
         if (this.t < this.limit) this.pq.insert(new Event(this.t + 1.0 / this.hz, null, null));
     };
 
@@ -130,3 +103,12 @@ var CollisionSystem = (function invocation() {
     
     return CollisionSystem;
 })();
+
+onmessage = function(e) {
+	importScripts("particle.js", "collision-system.js", "minpq.js");
+	var width = e.data[0];
+	var height = e.data[1];
+    var particles = Particle.generate(200,width,height);
+    var system = new CollisionSystem(particles);
+	system.simulate();
+};

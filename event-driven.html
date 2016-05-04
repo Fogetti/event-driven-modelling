@@ -16,7 +16,8 @@
         <div>
             <header>
                 <div>
-                <h1 style="color: gray">Event driven simulation demo:</h1> <canvas id="simulation" style="background: black"></canvas>
+	                <h1 style="color: gray">Event driven simulation demo:</h1>
+	                <canvas id="simulation" style="background: black" width="400px" height="400px"></canvas>
                 </div>
             </header>
 
@@ -29,17 +30,19 @@
         <script src="js/type.js"></script>
         <script src="js/minpq.js"></script>
         <script src="js/particle.js"></script>
+        <script src="js/draw-image.js"></script>
         <script src="js/collision-system.js"></script>
         <script>
-            var width = 400;
+            var width = 1200;
             var height = 400;
             var canvas = document.getElementById("simulation");
             windowResizeHandler();
             window.addEventListener('resize', windowResizeHandler, false);
             var c = canvas.getContext("2d");
-            
-            var particles = Particle.generate(c,100,width,height);
-            var system = new CollisionSystem(particles,canvas);
+            canvas.width = width;
+            canvas.height = height;
+
+            var system = new DrawImage(canvas);
             system.simulate();
 
             function windowResizeHandler() {
