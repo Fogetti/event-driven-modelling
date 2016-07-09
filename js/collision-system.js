@@ -13,8 +13,6 @@ var CollisionSystem = (function invocation() {
     CollisionSystem.prototype.simulate = function() {
         var self = this;
         
-        this.c.globalCompositeOperation = "destination-over";
-        
         // initialize PQ with collision events and redraw event
         for (var i = 0; i < this.particles.length; i++) {
             this.predict(this.particles[i]);
@@ -61,24 +59,15 @@ var CollisionSystem = (function invocation() {
     };
     
     CollisionSystem.prototype.redraw = function() {
-        // buffer canvas
-        var canvas2 = document.createElement("canvas");
-        canvas2.width = this.canvas.width;
-        canvas2.height = this.canvas.height;
-        var cx2 = canvas2.getContext("2d");
-        cx2.fillStyle = "rgba(0,0,0,0.01)";
-        cx2.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
-        cx2.drawImage(this.c.canvas, 0, 0);
-        
         this.c.clearRect(0, 0, this.c.canvas.width, this.c.canvas.height);
 
         for (var i = 0; i < this.particles.length; i++) {
-            this.particles[i].draw(cx2);
+            this.particles[i].draw(this.c);
         }
         
         this.c.fillStyle = "rgba(0,0,0,0.08)";
         this.c.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
-        this.c.drawImage(canvas2, 0, 0);
+        this.c.drawImage(this.c.canvas, 0, 0);
 
         if (this.t < this.limit) this.pq.insert(new Event(this.t + 1.0 / this.hz, null, null));
     };
