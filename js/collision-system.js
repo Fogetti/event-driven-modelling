@@ -65,6 +65,7 @@ var CollisionSystem = (function invocation() {
         var canvas2 = document.createElement("canvas");
         canvas2.width = this.canvas.width;
         canvas2.height = this.canvas.height;
+
         var cx2 = canvas2.getContext("2d");
         cx2.fillStyle = "rgba(0,0,0,0.01)";
         cx2.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
