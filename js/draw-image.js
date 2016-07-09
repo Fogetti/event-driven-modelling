@@ -43,12 +43,10 @@ var DrawImage = (function invocation() {
 			
 	        for (var i = 0; i < particles.length; i++) {
 	            var p = particles[i];
+                self.c2.fillStyle = p.color;
+                self.c2.lineWidth = p.radius*2;
 		        self.c2.beginPath();
-		        self.c2.fillStyle = p.color;
-		        self.c2.lineWidth = p.radius*2;
-		        self.c2.moveTo(p.rx,p.ry);
 		        self.c2.arc(p.rx,p.ry,p.radius,0,rads(360),true);
-		        self.c2.closePath();
 		        self.c2.fill();
 	        }
 	        
