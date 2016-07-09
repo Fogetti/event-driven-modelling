@@ -96,18 +96,7 @@ var Particle = (function invocation() {
     Particle.prototype.kineticEnergy = function() {
         return 0.5 * this.mass * (this.vx*this.vx + this.vy*this.vy);
     };
-    
-    Particle.randomParticle = function(screenW,screenH) {
-        var rx = Math.floor(Math.random()*screenW);                               // position x
-        var ry = Math.floor(Math.random()*screenH);                               // position y
-        var vx = uniform(-0.05, 0.05);                                            // velocity x
-        var vy = uniform(-0.05, 0.05);                                            // velocity y
-        var radius = 5;                                                           // radius
-        var mass = uniform(0, 1000);                                              // mass
-        var color = '#' + (Math.random() * 0x00eaff + 0xff0000 | 0).toString(16); // color
-        return new Particle(rx,ry,vx,vy,radius,mass,color,screenW,screenH);
-    };
-    
+        
     Particle.generate = function(n,screenW,screenH) {
         var particles = [];
         for (var j = 0; j < n; j++) {
