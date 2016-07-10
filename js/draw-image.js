@@ -13,7 +13,7 @@ var DrawImage = (function invocation() {
     DrawImage.prototype.simulate = function() {
     	this.c.globalCompositeOperation = "destination-over";
     	var self = this;
-        var blob = new Blob([document.querySelector('#worker1').textContent]);
+        var blob = new Blob([document.getElementById("worker1").textContent]);
     	var worker = new Worker(window.URL.createObjectURL(blob)); // Create worker
     	worker.postMessage({
             url: document.location.href,
