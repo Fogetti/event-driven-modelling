@@ -13,7 +13,7 @@ var DrawImage = (function invocation() {
     DrawImage.prototype.simulate = function() {
     	this.c.globalCompositeOperation = "destination-over";
     	var self = this;
-    	var worker = new Worker("js/collision-system.js"); // Create worker
+    	var worker = new Worker("collision-system.js"); // Create worker
     	worker.postMessage([this.canvas.width, this.canvas.height]); // Copy and send particle dimensions
     	
     	requestAnimationFrame(function(){
