@@ -10,10 +10,10 @@ var DrawImage = (function invocation() {
         this.c2 =         this.canvas2.getContext("2d");
     }
 
-    DrawImage.prototype.simulate = function() {
+    DrawImage.prototype.simulate = function(worker) {
     	this.c.globalCompositeOperation = "destination-over";
     	var self = this;
-        var blob = new Blob([document.getElementById("worker1").textContent]);
+        var blob = new Blob([worker.textContent]);
     	var worker = new Worker(window.URL.createObjectURL(blob)); // Create worker
     	worker.postMessage({
             url: document.location.href,

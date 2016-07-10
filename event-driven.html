@@ -167,7 +167,7 @@
             canvas.height = height;
 
             var system = new DrawImage(canvas);
-            system.simulate();
+            system.simulate(document.getElementById("worker1"));
 
             function windowResizeHandler() {
                 width = window.innerWidth;
