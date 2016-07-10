@@ -104,13 +104,10 @@ var CollisionSystem = (function invocation() {
     return CollisionSystem;
 })();
 
-if( 'function' === typeof importScripts) {
+onmessage = function(e) {
     importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/particle.js");    
     importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/collision-system.js");
     importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/minpq.js");
-}
-
-onmessage = function(e) {
 	var width = e.data[0];
 	var height = e.data[1];
     var particles = Particle.generate(200,width,height);
