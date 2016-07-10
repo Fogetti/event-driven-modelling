@@ -9,12 +9,17 @@ var DrawImage = (function invocation() {
         this.canvas2.height =        this.canvas.height;
         this.c2 =         this.canvas2.getContext("2d");
     }
-    
+
     DrawImage.prototype.simulate = function() {
     	this.c.globalCompositeOperation = "destination-over";
     	var self = this;
-    	var worker = new Worker("js/collision-system.js"); // Create worker
-    	worker.postMessage([this.canvas.width, this.canvas.height]); // Copy and send particle dimensions
+        var blob = new Blob([document.querySelector('#worker1').textContent]);
+    	var worker = new Worker(window.URL.createObjectURL(blob)); // Create worker
+    	worker.postMessage({
+            url: document.location.href,
+            0: this.canvas.width,
+            1: this.canvas.height
+        }); // Copy and send particle dimensions
     	
     	requestAnimationFrame(function(){
     		self.animate();
