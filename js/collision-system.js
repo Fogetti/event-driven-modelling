@@ -105,9 +105,9 @@ var CollisionSystem = (function invocation() {
 })();
 
 if( 'function' === typeof importScripts) {
-    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/particle.js");    
-    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/collision-system.js");
-    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/minpq.js");
+    importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/particle.js");    
+    importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/collision-system.js");
+    importScripts("https://rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/minpq.js");
 }
 
 onmessage = function(e) {
