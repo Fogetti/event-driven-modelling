@@ -104,8 +104,13 @@ var CollisionSystem = (function invocation() {
     return CollisionSystem;
 })();
 
+if( 'function' === typeof importScripts) {
+    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/particle.js");    
+    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/collision-system.js");
+    importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/minpq.js");
+}
+
 onmessage = function(e) {
-	importScripts("https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/particle.js", "https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/collision-system.js", "https://cdn.rawgit.com/Fogetti/event-driven-modelling/event-driven-part-3/js/minpq.js");
 	var width = e.data[0];
 	var height = e.data[1];
     var particles = Particle.generate(200,width,height);
