@@ -35,10 +35,10 @@
             var CollisionSystem = (function invocation() {
                 
                 function CollisionSystem(particles) {
-                    this.limit                                = 10000000;
+                    this.limit                                 = 1000000;
                     this.pq                                = new MinPQ();
                     this.t                                         = 0.0;
-                    this.hz                                      = 0.001;
+                    this.hz                                      = 0.005;
                     this.particles                           = particles;
                 }
                 
@@ -147,7 +147,7 @@
                         url = url.substring(0, index);
                     }
                     console.log(url);
-                    importScripts(url + "js/particle.js", url + "js/collision-system.js", url + "js/minpq.js");
+                    importScripts(url + "js/particle.js", url + "js/minpq.js");
                 }
                 var width = e.data[0];
                 var height = e.data[1];
